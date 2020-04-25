@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import MicroFrontend from "./MicroFrontend";
+import AppHeader from "./AppHeader";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const ReactService = () => <MicroFrontend name="ReactService" host={process.env.REACT_APP_REACT_SERVICE_HOST!}/>; //TODO: ! should not be needed
+
+    const VueJsService = () => <MicroFrontend name="VueJsService" host={process.env.REACT_APP_VUEJS_SERVICE_HOST!}/>; //TODO: ! should not be needed
+
+    const Home = () => <p>Home</p>;
+
+    return (
+        <BrowserRouter>
+            <React.Fragment>
+                <AppHeader />
+                <Switch>
+                    <Route exact path="/" component={Home}/>
+                    <Route exact path="/reactservice" component={ReactService}/>
+                    <Route exact path="/vuejsservice" component={VueJsService}/>
+                </Switch>
+            </React.Fragment>
+        </BrowserRouter>
+    );
 }
 
 export default App;
